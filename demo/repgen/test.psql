@@ -1,0 +1,10 @@
+
+drop table numbers;
+CREATE TABLE numbers (
+  id char(10) NOT NULL default ''
+  ,beschreibung char(20) NOT NULL default ''
+,quantity integer default 0,
+price decimal(10,2) default NULL
+) ;
+
+--
