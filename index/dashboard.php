@@ -109,7 +109,7 @@ $result = query("CALL reportMonthlyDisburse($companyId, '', '')");
                             <tr>
                                 <th>Month</th>
                                 <th>Sales</th>
-                                <th>Payment</th>
+                                <th>Purchase</th>
                             </tr>
                         </thead>
                         <tbody>

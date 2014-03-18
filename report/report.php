@@ -63,6 +63,21 @@ function ledgerSummery($ledgerId) {
     return query($sql);
 }
 
+function cashFlowMonthly($companyId){
+    $sql = "SELECT DATE_FORMAT(t.TranDate,'%M') AS 'Month', 
+    l.`Name`, SUM(IFNULL(DebitAmount,0))AS Dr,
+    SUM(IFNULL(CreditAmount,0)) AS Cr
+
+    FROM transactiondetail td
+    INNER JOIN ledger l ON l.LedgerId=td.LedgerId
+    INNER JOIN `group` g ON g.GroupId=l.GroupId
+    INNER JOIN `transaction` t ON t.TransactionId=td.TransactionId
+    WHERE t.CompanyId='$companyId' AND g.Alias='Cash in hand'
+    GROUP BY DATE_FORMAT(t.TranDate,'%b')";
+
+    return query($sql);
+}
+
 function inventoryVoucherView($searchId, $CompanyId) {
     $sql = "SELECT Ref, DATE_FORMAT(TranDate,'%e-%b %Y') AS TranDate, Note, t.VoucherTypeId, vt.`Name`
         FROM `transaction` t 
