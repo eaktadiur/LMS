@@ -26,22 +26,20 @@ $LedgerResult = ledgerBalance($companyId);
             </button>
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
                 <thead>
-                <th width="30">S/N</th>
-                <th>Particular</th>
-                <th width="100">Debit</th>
-                <th width="100">Credit</th>
+                    <th width="30">S/N</th>
+                    <th>Particular</th>
+                    <th width="100">Balance</th>
                 </thead>
 
                 <?php
                 while ($row = $LedgerResult->fetch_object()) {
-                    $Dr = $row->Balance > 0 ? abs($row->Balance) : '';
-                    $Cr = $row->Balance < 0 ? abs($row->Balance) : '';
+                    //$Dr = $row->Balance < 0 ? abs($row->Balance) : '';
+                    //$Cr = $row->Balance > 0 ? abs($row->Balance) : '';
                     ?>
                     <tr>
                         <td><?php echo ++$sl; ?></td>
                         <td><a href="transaction_details.php?ledgerId=<?php echo $row->LedgerID; ?>"><?php echo $row->Name; ?></a></td>
-                        <td align="right"><?php echo $Dr; ?></td>
-                        <td align="right"><?php echo $Cr; ?></td>
+                        <td align="right"><?php echo $row->Balance; ?></td>
                     </tr>
                     <?php
                 }

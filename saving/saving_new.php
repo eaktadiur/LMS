@@ -10,7 +10,6 @@ if (isSave()) {
 
     $ledgerId = getParam('ledgerId');
     $customerId = getParam('customerId');
-    $Ledger = getParam('Ledger');
     $savingTypeId = getParam('savingTypeId');
     $collection_amount = getParam('collection_amount');
     $interest_rate = getParam('interest_rate');
@@ -23,7 +22,7 @@ if (isSave()) {
 
     if ($mode == 'new') {
         $sql = "INSERT INTO savings(Date, LedgerId, CustomerId, CollectionDayId, SavingTypeId, InterestRate, Nominee, CollectionAmount, CollectById, CompanyId, IsActive, CreatedBy, CreatedDate)
-            VALUES('$date','$Ledger', '$customerId', '$collectionDay', '$savingTypeId', '$interest_rate', '$nominee_name', '$collection_amount', '$collect_person',  '$companyId', '$isActive', '$employeeId', NOW())";
+            VALUES('$date','$ledgerId', '$customerId', '$collectionDay', '$savingTypeId', '$interest_rate', '$nominee_name', '$collection_amount', '$collect_person',  '$companyId', '$isActive', '$employeeId', NOW())";
         query($sql);
     } else {
 
@@ -73,8 +72,8 @@ include("../body/header.php");
 
             <form class="form-horizontal" action="<?php $_SERVER['PHP_SELF'] ?>" method="POST"autocomplete="off" enctype="multipart/form-data">
                 <input type="hidden" name="mode" value="<?php echo $mode; ?>"/>
-                <input type="hidden" name="ledgerId" value="<?php echo $var->LedgerId; ?>"/>
-                <table class="table table-striped table-bordered bootstrap-datatable">
+                
+				<table class="table table-striped table-bordered bootstrap-datatable">
                     <tr>
                         <td>Date :</td>
                         <td><input type="text" name="date" class="datepicker" required value="<?php echo $var->Date; ?>"/><span class="red"> *</span></td>
@@ -85,7 +84,7 @@ include("../body/header.php");
                     </tr>
                     <tr>
                         <td>Ledger: </td>
-                        <td><?php comboBox('Ledger', $partyLedger, "$var->LedgerId", TRUE, 'autoComplate', 'required'); ?><span class="red"> *</span></td>
+                        <td><?php comboBox('ledgerId', $partyLedger, "$var->LedgerId", TRUE, 'autoComplate', 'required'); ?><span class="red"> *</span></td>
                     </tr>
                     <tr>
                         <td>Savings :</td>

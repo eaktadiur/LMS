@@ -9,6 +9,12 @@ $date = date('Y-m-d');
 $voucherTypeList = getVoucherType($companyId, 4);
 $ledgerList = getLedgerVoucherList($companyId);
 
+if (isSave()) {
+
+    saveJournalVoucher($employeeId, $companyId);
+    echo "<script type='text/javascript'>location.replace('journal_voucher.php');</script>";
+}
+
 include("../body/header.php");
 ?>
 
@@ -41,7 +47,7 @@ include("../body/header.php");
             </h3>
         </div>
         <div class="box-content">
-            <form action="save_accounting.php" method="POST" name='requisition' id='requisition' class="form" autocomplete="off">
+            <form action="" method="POST" name='requisition' id='requisition' class="form" autocomplete="off">
 
                 <input type="hidden" name="requisitionId" id="requisitionId" value="<?php echo $maxId ?>" />
                 <input type="hidden" name="mode" value="new" />
@@ -57,7 +63,7 @@ include("../body/header.php");
                         <td>Date: </td>
                         <td><input type="text" name="date" required class="datepicker" value="<?php echo $date; ?>" /></td>
                     </tr>
-                    
+
                     <tr>
                         <td>Voucher Type: </td>
                         <td><?php comboBox('voucherType', $voucherTypeList, "", FALSE, 'required'); ?></td>
@@ -66,7 +72,7 @@ include("../body/header.php");
 
                 <div class="center"><h2>Journal Voucher</h2></div>
                 <hr/>
-                
+
                 <table id="productGrid" class="table table-striped table-bordered bootstrap-datatable">
                     <thead>
                         <tr>

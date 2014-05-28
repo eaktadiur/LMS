@@ -53,3 +53,35 @@ function addCombo() {
 
 }
 
+
+
+function debitSum() {
+    var sum = 0;
+    //iterate through each textboxes and add the values
+    $(".Debit").each(function() {
+
+        //add only if the value is number
+        if (!isNaN(this.value) && this.value.length != 0) {
+            sum += parseFloat(this.value);
+        }
+
+    });
+    //.toFixed() method will roundoff the final sum to 2 decimal places
+    $("#DebitGrantTotal").html(sum.toFixed(2));
+}
+
+function creditSum() {
+    var sum = 0;
+    //iterate through each textboxes and add the values
+    $(".Credit").each(function() {
+
+        //add only if the value is number
+        if (!isNaN(this.value) && this.value.length !== 0) {
+            sum += parseFloat(this.value);
+        }
+
+    });
+    //.toFixed() method will roundoff the final sum to 2 decimal places
+    $("#CreditGrantTotal").html(sum.toFixed(2));
+}
+

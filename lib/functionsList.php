@@ -281,6 +281,54 @@ function saveSavingCollectionVoucher($employeeId, $companyId) {
     }
 }
 
+function saveJournalVoucher($employeeId, $companyId) {
+    global $mysqli;
+
+
+    $mode = getParam('mode');
+    $ref = getParam('ref');
+    $date = getParam('date');
+    $note = getParam('note');
+    $voucherType = getParam('voucherType');
+
+    $ledgerId = getParam('ledgerId');
+    $Debit = getParam('Debit');
+    $Credit = getParam('Credit');
+
+
+    if ($mode == 'new') {
+
+        try {
+            $mysqli->autocommit(FALSE);
+            $transactionId = maxTransactionId();
+            $TranNo = OrderNo($transactionId);
+            $transaction = "INSERT INTO `transaction`(Ref, TranNo, TranDate, Note, VoucherTypeId, CreatedBy, CreatedOn, CompanyId) 
+            VALUES('$ref', '$TranNo', '$date', '$note', '$voucherType', '$employeeId', NOW(), '$companyId')";
+
+            query($transaction);
+            $transactionId = insertLastId();
+            $tranType = 1;
+            
+            foreach ($ledgerId as $key => $value) {
+                $transactionDr = "INSERT INTO transactiondetail(TransactionId, LedgerId, TransactionType, DebitAmount, CreditAmount) 
+                VALUES('$transactionId', '$ledgerId[$key]', '$tranType', '$Debit[$key]', '$Credit[$key]')";
+                query($transactionDr);
+                $tranType = 2;
+            }
+
+            $mysqli->commit();
+        } catch (Exception $exc) {
+            $mysqli->rollBack();
+            echo "Fallo: " . $exc->getMessage();
+        }
+
+
+        $mysqli->close();
+    } else {
+        
+    }
+}
+
 function getCompanyList() {
 
     $sql = "SELECT co.CompanyId, co.Code, co.`Name`, co.Address1, co.Address2, co.ZipCode, co.Phone, co.Fax, co.Email, co.CurrencySymbol,
